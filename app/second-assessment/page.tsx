@@ -19,6 +19,7 @@ export default function SecondAssessmentPage() {
   const [confidence, setConfidence] = useState<number>(5)
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // For demo purposes, we're using a placeholder image
   const carImage = "/placeholder.svg?height=400&width=600"
@@ -28,40 +29,59 @@ export default function SecondAssessmentPage() {
 
   useEffect(() => {
     // Load the previous assessment data
-    const savedAssessment = getAssessment()
-    if (savedAssessment) {
-      setAssessment(savedAssessment)
-      // Pre-fill with the previous valuation as a starting point
-      setValuation(savedAssessment.firstValuation.toString())
-      setConfidence(savedAssessment.firstConfidence)
+    async function loadAssessment() {
+      try {
+        const savedAssessment = await getAssessment()
+        if (savedAssessment) {
+          setAssessment(savedAssessment)
+          // Pre-fill with the previous valuation as a starting point
+          setValuation(savedAssessment.firstValuation.toString())
+          setConfidence(savedAssessment.firstConfidence)
+        }
+      } catch (err) {
+        console.error("Error loading assessment:", err)
+      } finally {
+        setLoading(false)
+      }
     }
-    setLoading(false)
+
+    loadAssessment()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setError("")
 
-    if (!valuation || isNaN(Number.parseFloat(valuation))) {
-      setError("Please enter a valid valuation amount")
-      return
+    try {
+      if (!valuation || isNaN(Number.parseFloat(valuation))) {
+        setError("Please enter a valid valuation amount")
+        return
+      }
+
+      if (!assessment) {
+        setError("Previous assessment data not found")
+        return
+      }
+
+      // Update the assessment with the second valuation
+      await updateAssessment({
+        ...assessment,
+        secondValuation: Number.parseFloat(valuation),
+        secondConfidence: confidence,
+        modelPrediction: modelPrediction,
+        groundTruth: 26500, // Adding ground truth value
+        completedAt: new Date().toISOString(),
+      })
+
+      // Navigate to the results page
+      router.push("/results")
+    } catch (err) {
+      console.error("Error submitting assessment:", err)
+      setError("Failed to save your assessment. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
-
-    if (!assessment) {
-      setError("Previous assessment data not found")
-      return
-    }
-
-    // Update the assessment with the second valuation
-    updateAssessment({
-      ...assessment,
-      secondValuation: Number.parseFloat(valuation),
-      secondConfidence: confidence,
-      modelPrediction: modelPrediction,
-      completedAt: new Date().toISOString(),
-    })
-
-    // Navigate to the results page
-    router.push("/results")
   }
 
   if (loading) {
@@ -254,8 +274,8 @@ export default function SecondAssessmentPage() {
           </form>
         </CardContent>
         <CardFooter>
-          <Button onClick={handleSubmit} className="w-full">
-            Submit & Complete Study
+          <Button onClick={handleSubmit} className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit & Complete Study"}
           </Button>
         </CardFooter>
       </Card>

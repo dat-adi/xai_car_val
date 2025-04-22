@@ -17,6 +17,7 @@ export default function FirstAssessmentPage() {
   const [valuation, setValuation] = useState<string>("")
   const [confidence, setConfidence] = useState<number>(5)
   const [error, setError] = useState<string>("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // For demo purposes, we're using a placeholder image
   // In a real application, you would fetch the car image from your database
@@ -26,24 +27,33 @@ export default function FirstAssessmentPage() {
     name: "Sedan XYZ 2020",
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setError("")
 
-    if (!valuation || isNaN(Number.parseFloat(valuation))) {
-      setError("Please enter a valid valuation amount")
-      return
+    try {
+      if (!valuation || isNaN(Number.parseFloat(valuation))) {
+        setError("Please enter a valid valuation amount")
+        setIsSubmitting(false)
+        return
+      }
+
+      // Save the first assessment data
+      await saveAssessment({
+        carId: carDetails.id,
+        firstValuation: Number.parseFloat(valuation),
+        firstConfidence: confidence,
+        timestamp: new Date().toISOString(),
+      })
+
+      // Navigate to the second assessment page
+      router.push("/second-assessment")
+    } catch (err) {
+      console.error("Error submitting assessment:", err)
+      setError("Failed to save your assessment. Please try again.")
+      setIsSubmitting(false)
     }
-
-    // Save the first assessment data
-    saveAssessment({
-      carId: carDetails.id,
-      firstValuation: Number.parseFloat(valuation),
-      firstConfidence: confidence,
-      timestamp: new Date().toISOString(),
-    })
-
-    // Navigate to the second assessment page
-    router.push("/second-assessment")
   }
 
   return (
@@ -107,8 +117,8 @@ export default function FirstAssessmentPage() {
           </form>
         </CardContent>
         <CardFooter>
-          <Button onClick={handleSubmit} className="w-full">
-            Submit & Continue
+          <Button onClick={handleSubmit} className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit & Continue"}
           </Button>
         </CardFooter>
       </Card>

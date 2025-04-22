@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { DbStatus } from "@/components/db-status"
 
 export default function LandingPage() {
   return (
@@ -9,6 +10,10 @@ export default function LandingPage() {
         <h1 className="text-4xl font-bold tracking-tight mb-4">Car Valuation Study</h1>
         <p className="text-xl text-muted-foreground">Expert Assessment & Model Comparison</p>
       </header>
+
+      <div className="mb-6">
+        <DbStatus />
+      </div>
 
       <Card className="mb-8">
         <CardHeader>

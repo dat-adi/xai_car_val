@@ -14,11 +14,20 @@ export default function ResultsPage() {
 
   useEffect(() => {
     // Load the completed assessment data
-    const savedAssessment = getAssessment()
-    if (savedAssessment && savedAssessment.secondValuation) {
-      setAssessment(savedAssessment)
+    async function loadAssessment() {
+      try {
+        const savedAssessment = await getAssessment()
+        if (savedAssessment && savedAssessment.secondValuation) {
+          setAssessment(savedAssessment)
+        }
+      } catch (err) {
+        console.error("Error loading assessment:", err)
+      } finally {
+        setLoading(false)
+      }
     }
-    setLoading(false)
+
+    loadAssessment()
   }, [])
 
   const handleStartNew = () => {
@@ -46,6 +55,7 @@ export default function ResultsPage() {
   const valuationDifference = assessment.secondValuation - assessment.firstValuation
   const percentChange = (valuationDifference / assessment.firstValuation) * 100
   const confidenceDifference = assessment.secondConfidence - assessment.firstConfidence
+  const groundTruth = 26500
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -66,7 +76,7 @@ export default function ResultsPage() {
             firstValuation={assessment.firstValuation}
             secondValuation={assessment.secondValuation}
             modelPrediction={assessment.modelPrediction}
-            groundTruth={26500} // Adding ground truth value
+            groundTruth={groundTruth}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -113,11 +123,12 @@ export default function ResultsPage() {
               improve valuation accuracy and confidence.
             </p>
           </div>
+
           <div className="p-6 border rounded-lg mt-6">
             <h3 className="text-lg font-semibold mb-4">Final Ground Truth</h3>
             <p className="mb-3">
               The actual market value of this vehicle was determined to be{" "}
-              <span className="font-bold">$26500.toLocaleString()</span> based on recent comparable sales and
+              <span className="font-bold">${groundTruth.toLocaleString()}</span> based on recent comparable sales and
               professional appraisal.
             </p>
 
@@ -126,9 +137,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-blue-700">Your Initial Estimate</p>
                 <p className="text-xl font-bold">${assessment.firstValuation.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.firstValuation - 26500) < 1000
+                  {Math.abs(assessment.firstValuation - groundTruth) < 1000
                     ? "Very accurate!"
-                    : assessment.firstValuation > 26500
+                    : assessment.firstValuation > groundTruth
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
@@ -138,9 +149,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-purple-700">Model's Prediction</p>
                 <p className="text-xl font-bold">${assessment.modelPrediction.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.modelPrediction - 26500) < 1000
+                  {Math.abs(assessment.modelPrediction - groundTruth) < 1000
                     ? "Very accurate!"
-                    : assessment.modelPrediction > 26500
+                    : assessment.modelPrediction > groundTruth
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
@@ -150,9 +161,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-green-700">Your Final Estimate</p>
                 <p className="text-xl font-bold">${assessment.secondValuation.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.secondValuation - 26500) < 1000
+                  {Math.abs(assessment.secondValuation - groundTruth) < 1000
                     ? "Very accurate!"
-                    : assessment.secondValuation > 26500
+                    : assessment.secondValuation > groundTruth
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
