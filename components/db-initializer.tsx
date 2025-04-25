@@ -17,9 +17,11 @@ export function DbInitializer() {
 
       // Check if tables exist
       const { data: tables, error } = await supabase
-        .from("information_schema.tables")
-        .select("table_name")
-        .eq("table_schema", "public")
+      .from('tables')
+      .select('table_name')
+      .eq('table_schema', 'public')
+      // You may need to specify the schema
+      .schema('information_schema');
 
       if (error) {
         console.error("Error checking database status:", error)
@@ -52,17 +54,10 @@ export function DbInitializer() {
     try {
       const supabase = createClientSideSupabaseClient()
 
-      // Create extension for UUID generation if it doesn't exist
-      const { error: extensionError } = await supabase
-        .rpc("create_extension_if_not_exists", {
-          extension_name: "uuid-ossp",
-        })
-        .catch(() => {
-          // If the RPC doesn't exist, try direct SQL
-          return supabase.rpc("execute_sql", {
-            sql_query: 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
-          })
-        })
+      // Create extension for UUID generation
+      const { error: extensionError } = await supabase.rpc("execute_sql", {
+        sql_query: 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
+      }).then(({ error }) => ({ error }))
 
       if (extensionError) {
         console.warn("Could not create uuid-ossp extension:", extensionError)
