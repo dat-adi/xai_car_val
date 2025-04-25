@@ -20,11 +20,9 @@ export default function SecondAssessmentPage() {
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(true)
 
-  // For demo purposes, we're using a placeholder image
-  const carImage = "/placeholder.svg?height=400&width=600"
+  const carImage = "/car_image.png"
 
-  // Mock model prediction and factors
-  const modelPrediction = 25000
+  const modelPrediction = 3000
 
   useEffect(() => {
     // Load the previous assessment data
@@ -97,19 +95,19 @@ export default function SecondAssessmentPage() {
               <tbody>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Brand & Model</td>
-                  <td className="py-2 px-4">Toyota Camry XSE</td>
+                  <td className="py-2 px-4">Ford Explorer XLT 4WD</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Year</td>
-                  <td className="py-2 px-4">2020</td>
+                  <td className="py-2 px-4">2002</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Mileage</td>
-                  <td className="py-2 px-4">45,230 miles</td>
+                  <td className="py-2 px-4">243,165 miles</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Engine</td>
-                  <td className="py-2 px-4">2.5L 4-Cylinder</td>
+                  <td className="py-2 px-4">4.0L 6-Cylinder</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Transmission</td>
@@ -117,7 +115,7 @@ export default function SecondAssessmentPage() {
                 </tr>
                 <tr className="border-b">
                   <td className="py-2 px-4 font-medium">Service History</td>
-                  <td className="py-2 px-4">5 dealer service visits</td>
+                  <td className="py-2 px-4">Full service history recorded </td>
                 </tr>
                 <tr>
                   <td className="py-2 px-4 font-medium">Accidents</td>
@@ -164,23 +162,23 @@ export default function SecondAssessmentPage() {
                 <div className="p-3 border rounded-md bg-green-50">
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-medium">Base Model Value</span>
-                    <span className="font-bold text-green-700">+$18,500</span>
+                    <span className="font-bold text-green-700">+$5,000</span>
                   </div>
                   <p className="text-sm text-muted-foreground">Standard value for this make, model, and year</p>
                 </div>
 
-                <div className="p-3 border rounded-md bg-green-50">
+                <div className="p-3 border rounded-md bg-red-50">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="font-medium">Low Mileage Bonus</span>
-                    <span className="font-bold text-green-700">+$2,200</span>
+                    <span className="font-medium">High Mileage Penalty</span>
+                    <span className="font-bold text-red-700">-$2,750</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">Below average mileage for vehicle age</p>
+                  <p className="text-sm text-muted-foreground">Above average mileage for vehicle age</p>
                 </div>
 
                 <div className="p-3 border rounded-md bg-green-50">
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-medium">Premium Features</span>
-                    <span className="font-bold text-green-700">+$3,800</span>
+                    <span className="font-bold text-green-700">+$250</span>
                   </div>
                   <p className="text-sm text-muted-foreground">Leather seats, sunroof, premium audio</p>
                 </div>
@@ -188,7 +186,7 @@ export default function SecondAssessmentPage() {
                 <div className="p-3 border rounded-md bg-red-50">
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-medium">Market Adjustment</span>
-                    <span className="font-bold text-red-700">-$1,500</span>
+                    <span className="font-bold text-red-700">-$250</span>
                   </div>
                   <p className="text-sm text-muted-foreground">Current market conditions for this model</p>
                 </div>
@@ -196,7 +194,7 @@ export default function SecondAssessmentPage() {
                 <div className="p-3 border rounded-md bg-green-50">
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-medium">Service History</span>
-                    <span className="font-bold text-green-700">+$2,000</span>
+                    <span className="font-bold text-green-700">+$750</span>
                   </div>
                   <p className="text-sm text-muted-foreground">Well-maintained with regular dealer service</p>
                 </div>

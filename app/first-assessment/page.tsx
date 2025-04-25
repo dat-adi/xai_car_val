@@ -20,7 +20,7 @@ export default function FirstAssessmentPage() {
 
   // For demo purposes, we're using a placeholder image
   // In a real application, you would fetch the car image from your database
-  const carImage = "/placeholder.svg?height=400&width=600"
+  const carImage = "/car_image.png"
   const carDetails = {
     id: "car123",
     name: "Sedan XYZ 2020",

@@ -66,7 +66,7 @@ export default function ResultsPage() {
             firstValuation={assessment.firstValuation}
             secondValuation={assessment.secondValuation}
             modelPrediction={assessment.modelPrediction}
-            groundTruth={26500} // Adding ground truth value
+            groundTruth={2700} // Adding ground truth value
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -116,9 +116,8 @@ export default function ResultsPage() {
           <div className="p-6 border rounded-lg mt-6">
             <h3 className="text-lg font-semibold mb-4">Final Ground Truth</h3>
             <p className="mb-3">
-              The actual market value of this vehicle was determined to be{" "}
-              <span className="font-bold">$26500.toLocaleString()</span> based on recent comparable sales and
-              professional appraisal.
+              The actual market value of this vehicle is {" "}
+              <span className="font-bold">$2700</span> based on the amount this vehicle was recently sold for.
             </p>
 
             <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -126,9 +125,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-blue-700">Your Initial Estimate</p>
                 <p className="text-xl font-bold">${assessment.firstValuation.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.firstValuation - 26500) < 1000
+                  {Math.abs(assessment.firstValuation - 2700) < 500
                     ? "Very accurate!"
-                    : assessment.firstValuation > 26500
+                    : assessment.firstValuation > 2700
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
@@ -138,9 +137,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-purple-700">Model's Prediction</p>
                 <p className="text-xl font-bold">${assessment.modelPrediction.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.modelPrediction - 26500) < 1000
+                  {Math.abs(assessment.modelPrediction - 2700) < 500
                     ? "Very accurate!"
-                    : assessment.modelPrediction > 26500
+                    : assessment.modelPrediction > 2700
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
@@ -150,9 +149,9 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-green-700">Your Final Estimate</p>
                 <p className="text-xl font-bold">${assessment.secondValuation.toLocaleString()}</p>
                 <p className="text-sm mt-1">
-                  {Math.abs(assessment.secondValuation - 26500) < 1000
+                  {Math.abs(assessment.secondValuation - 2700) < 500
                     ? "Very accurate!"
-                    : assessment.secondValuation > 26500
+                    : assessment.secondValuation > 2700
                       ? "Higher than actual value"
                       : "Lower than actual value"}
                 </p>
@@ -172,7 +171,6 @@ export default function ResultsPage() {
 
       <div className="text-center text-sm text-muted-foreground">
         <p>© 2024 Car Valuation Research Team. All rights reserved.</p>
-        <p>For questions about this study, please contact research@carvaluation.example.com</p>
       </div>
     </div>
   )
