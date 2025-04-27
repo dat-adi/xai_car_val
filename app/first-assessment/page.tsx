@@ -55,6 +55,48 @@ export default function FirstAssessmentPage() {
 
       <Card className="mb-8">
         <CardHeader>
+          <CardTitle>Vehicle Information</CardTitle>
+          <CardDescription>Details about the vehicle being assessed</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <tbody>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Brand & Model</td>
+                  <td className="py-2 px-4">Ford Explorer XLT 4WD</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Year</td>
+                  <td className="py-2 px-4">2002</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Mileage</td>
+                  <td className="py-2 px-4">243,165 miles</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Engine</td>
+                  <td className="py-2 px-4">4.0L 6-Cylinder</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Transmission</td>
+                  <td className="py-2 px-4">Automatic</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-2 px-4 font-medium">Service History</td>
+                  <td className="py-2 px-4">Full service history recorded </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-medium">Accidents</td>
+                  <td className="py-2 px-4">None reported</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+      <Card className="mb-8">
+        <CardHeader>
           <CardTitle>Vehicle Assessment</CardTitle>
           <CardDescription>
             Please provide your expert valuation based solely on the vehicle image below.

@@ -50,8 +50,7 @@ export default function LandingPage() {
       </Card>
 
       <div className="text-center text-sm text-muted-foreground">
-        <p>© 2024 Car Valuation Research Team. All rights reserved.</p>
-        <p>For questions about this study, please contact research@carvaluation.example.com</p>
+        <p>© 2025 Car Valuation Research Team. All rights reserved.</p>
       </div>
     </div>
   )
